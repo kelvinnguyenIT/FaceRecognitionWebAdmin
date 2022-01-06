@@ -22,6 +22,10 @@ Route::get('/login', function () {
 
 Route::get('/', [ HomeController::class, 'viewFaceList'])->name('dashboard');
 
+Route::get('/attendance/{slug}', [ HomeController::class, 'viewFaceListAttendance'])->name('faceListAttendance');
+
+Route::get('/attendance', [ HomeController::class, 'viewFaceListAttendancePickDate'])->name('viewFaceListAttendancePickDate');
+
 Route::get('/logout-admin', function () {
     Auth::logout();
     session()->flush();

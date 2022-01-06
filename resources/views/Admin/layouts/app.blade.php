@@ -13,6 +13,7 @@
     <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/ruang-admin.min.css" rel="stylesheet">
 
+    <link href="/css/page.css" rel="stylesheet">
     <script src="/ckeditor/ckeditor.js"></script>
     
     

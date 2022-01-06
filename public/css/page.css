@@ -1,0 +1,24 @@
+.boxDetail {
+    border: none;
+    padding: 5px;
+    font: 24px/36px sans-serif;
+    width: auto;
+    height: 200px;
+    overflow: auto;
+    }
+    
+    /* Scrollbar styles */
+    ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    }
+    
+    
+    ::-webkit-scrollbar-thumb {
+    background: #6777ef;  
+    border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+    background: #6777ef;  
+    }

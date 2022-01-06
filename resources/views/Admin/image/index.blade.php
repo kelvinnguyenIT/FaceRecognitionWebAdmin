@@ -6,11 +6,10 @@
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Image List</h1>
+            <h1 class="h3 mb-0 text-gray-800">Recognition List</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Admin</a></li>
-                <li class="breadcrumb-item">Image</li>
-                <li class="breadcrumb-item active" aria-current="page">Image List</li>
+                <li class="breadcrumb-item">Recognition List</li>
             </ol>
         </div>
 
@@ -20,23 +19,25 @@
                           
             <div class="col-lg-12" id="example">
                     <div class="card-body">
-                      <button type="button" class="btn btn-primary mb-1">Today</button>
-                      <button type="button" class="btn btn-primary mb-1">This Week</button>
-                      <button type="button" class="btn btn-primary mb-1">This Month</button>
+                      <a href="/attendance/today"><button type="button" class="btn btn-primary mb-1">Today</button></a>
+                      <a href="/attendance/thisWeek"><button type="button" class="btn btn-primary mb-1">This Week</button></a>
+                      <a href="/attendance/thisMonth"><button type="button" class="btn btn-primary mb-1">This Month</button></a>
                       <div class='input-group date' >
-                        <form action="" method="get">
-                            <input type="date" id="from" name="from">
+                        <form action="/attendance" method="get">
+                            <input type="date" id="from" name="from" required>
                             <label for="to">To</label>
-                            <input type="date" id="to" name="to">
+                            <input type="date" id="to" name="to" required>
                             <button type="submit" class="btn btn-primary mb-1"><i class="fas fa-search fa-fw"></i></button>
                         </form>
                      </div>
                     </div>
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Image List</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Recognition List</h6>
                     </div>
                     <div class="table-responsive p-3">
+
+                        @if(count($faceList) > 0)
                         <table class="table align-items-center table-flush" id="dataTable">
                             <thead class="thead-light">
                                 <tr>
@@ -44,8 +45,8 @@
                                     <th>Name</th>
                                     <th>Class</th>
                                     <th>Birthday</th>
-                                    <th>Date</th>
-                                    <th>Perform</th>
+                                    <th>Attendant</th>
+                                    <th>Detail</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,29 +58,30 @@
                                     <td>{{@$face->userinfo()->first()->name}}</td>
                                     <td>{{@$face->userinfo()->first()->class}}</td>
                                     <td>{{@$face->userinfo()->first()->bday}}</td>
-                                    <td>{{$face->date}}</td>
+                                    <td>{{$face->quantity}}</td>
                                     <td>
-                                        <a href="" style="float: left"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                                          </svg></a>
-                                          {{-- <form action="" method="POST">
-                                            @csrf
-                                            @method('DELETE') --}}
-                                          <button type="submit" style="background: none;border: 0"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                          </svg>
-                                          </button>
-                                          {{-- </form> --}}
+                                        <div class="boxDetail">
+                                            <ul>
+                                                @forelse ($face->detailRecognition as $attendant)
+                                                <li style="font-size: 15px">{{$attendant->date_time}}</li>
+                                                @empty
+                                                    <p style="color: red">Empty</p>
+                                                @endforelse
+                                            </ul>
+                                        </div>
                                     </td>
                                 </tr>
                                                                     
                                 @empty
-                                <tr style="color: red">Product Empty</tr>
+                                
                                 @endforelse
 
                             </tbody>
                         </table>
+                        @else
+                        
+                        <img src="/image/notfound.jpg" alt="Result Not Found" style="display: block;margin-left: auto;margin-right: auto"/>
+                        @endif
                     </div>
                 </div>
             </div>
